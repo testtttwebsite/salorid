@@ -24,7 +24,8 @@ a{text-decoration:none;color:inherit;}
 #hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;}
 
 .info-section{position:relative;width:100%;background:#0d0d0d;padding:80px 20px;}
-.info-section .info-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:40px;max-width:1000px;margin:0 auto 60px;}
+.info-section .info-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:40px;max-width:1000px;margin:0 auto 60px; opacity:0; transform:translateY(20px); transition:opacity 1.6s ease-out, transform 1.6s ease-out;}
+.info-section .info-row.visible{opacity:1; transform:translateY(0);}
 .info-row .info-img{flex:1 1 300px;max-width:400px;}
 .info-row .info-img img{width:100%;border-radius:12px;}
 .info-row .info-text{flex:1 1 300px;max-width:500px;color:#eee;}
@@ -40,6 +41,17 @@ a{text-decoration:none;color:inherit;}
 
 footer{text-align:center;padding:20px 0;background:rgba(15,15,15,0.9);font-size:0.9rem;color:#aaa;}
 @keyframes fadeIn{0%{opacity:0;transform:translateY(15px);}100%{opacity:1;transform:translateY(0);}}
+
+/* NEW FADE-IN CLASS */
+.fade-in-scroll {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 1.6s ease-out, transform 1.6s ease-out;
+}
+.fade-in-scroll.show {
+    opacity: 1;
+    transform: translateY(0);
+}
 `
 head.appendChild(style)
 
@@ -48,7 +60,7 @@ navbar.className = "navbar"
 navbar.innerHTML = `
 <div class="logo">SALORID</div>
 <ul class="nav-links">
-  <li><a href="#" class="active">Home</a></li>
+  <li><a href="index.html" class="active">Home</a></li>
   <li><a href="buy.html">Buy Now</a></li>
   <li><a href="account.html">Account</a></li>
 </ul>
@@ -76,7 +88,7 @@ const rows = [
 ]
 rows.forEach((r, idx) => {
   const row = document.createElement("div")
-  row.className = "info-row"
+  row.className = "info-row fade-in-scroll"
   let html = ""
   if(idx % 2 === 0) {
     html = `
@@ -119,7 +131,6 @@ banners.innerHTML = `
   </a>
 </div>
 `
-
 body.appendChild(banners)
 
 const canvas = document.getElementById("hero-bg")
@@ -167,3 +178,13 @@ function animate(){
   requestAnimationFrame(animate)
 }
 animate()
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("show")
+    }
+  })
+}, { threshold: 0.2 })
+
+document.querySelectorAll(".fade-in-scroll").forEach(el => observer.observe(el))
