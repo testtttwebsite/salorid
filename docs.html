@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SALORID - Docs</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family:'Segoe UI', sans-serif; background:#0d0d0d; color:#eaeaea; display:flex;}
+::-webkit-scrollbar {width:8px;}
+::-webkit-scrollbar-thumb {background:#00ffe7;}
+
+.topbar {
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:60px;
+background:#0f0f0f;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 40px;
+z-index:10;
+border-bottom:1px solid #1a1a1a;
+}
+.topbar .logo {font-size:24px; font-weight:800; color:#00ffe7;}
+.topbar .links a {
+margin-left:25px;
+color:#fff;
+font-weight:600;
+padding:6px 12px;
+border-radius:6px;
+transition:0.2s;
+}
+.topbar .links a:hover {background:rgba(0,255,231,0.15); color:#00ffe7;}
+
+.sidebar {
+position:fixed;
+top:60px;
+left:0;
+width:260px;
+height:calc(100vh - 60px);
+background:#131313;
+border-right:1px solid #1a1a1a;
+padding:25px 0;
+overflow-y:auto;
+}
+.sidebar h3 {
+padding:10px 25px;
+font-size:14px;
+color:#00ffe7;
+margin-bottom:10px;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+.sidebar a {
+display:block;
+color:#eaeaea;
+padding:10px 25px;
+font-size:15px;
+border-left:3px solid transparent;
+transition:0.2s;
+}
+.sidebar a:hover {background:#1c1c1c;}
+.sidebar a.active {
+background:#1c1c1c;
+border-left:3px solid #00ffe7;
+color:#00ffe7;
+}
+
+.content {
+margin-left:260px;
+margin-top:60px;
+padding:40px 60px;
+width:calc(100% - 260px);
+}
+.content h1 {font-size:32px; color:#00ffe7; margin-bottom:20px;}
+.content p {margin-bottom:18px; line-height:1.6; color:#ccc;}
+.placeholder {background:#151515; padding:20px; border-radius:10px; border:1px solid #222; color:#aaa;}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+<div class="logo">SALORID Docs</div>
+<div class="links">
+<a href="index.html">Home</a>
+<a href="buy.html">Buy Now</a>
+<a href="account.html">Account</a>
+</div>
+</div>
+
+<div class="sidebar">
+<h3>Getting Started</h3>
+<a href="#" class="active" data-page="intro">Introduction</a>
+<a href="#" data-page="install">Installation</a>
+<a href="#" data-page="faq">FAQ</a>
+
+<h3>Features</h3>
+<a href="#" data-page="combat">Combat</a>
+<a href="#" data-page="visuals">Visuals</a>
+<a href="#" data-page="movement">Movement</a>
+
+<h3>Account</h3>
+<a href="#" data-page="license">Licenses</a>
+</div>
+
+<div class="content" id="content">
+<h1>Introduction</h1>
+<div class="placeholder">
+</div>
+</div>
+
+<script>
+const pages = {
+intro: `
+<h1>Introduction</h1>
+<div class="placeholder">
+Welcome to the SALORID documentation.
+</div>
+`,
+install: `
+<h1>Installation</h1>
+<div class="placeholder">
+Guide coming soon.<br><br>
+</div>
+`,
+faq: `
+<h1>FAQ</h1>
+<div class="placeholder">
+Frequently asked questions will appear here.<br><br>
+</div>
+`,
+combat: `
+<h1>Combat</h1>
+<div class="placeholder">
+</div>
+`,
+visuals: `
+<h1>Visuals</h1>
+<div class="placeholder">
+</div>
+`,
+movement: `
+<h1>Movement</h1>
+<div class="placeholder">
+</div>
+`,
+license: `
+<h1>Licenses</h1>
+<div class="placeholder">
+License system explanation.
+</div>
+`,
+};
+
+const links = document.querySelectorAll(".sidebar a");
+const content = document.getElementById("content");
+
+links.forEach(a => {
+a.onclick = e => {
+e.preventDefault();
+links.forEach(x => x.classList.remove("active"));
+a.classList.add("active");
+content.innerHTML = pages[a.dataset.page];
+};
+});
+</script>
+
+</body>
+</html>
